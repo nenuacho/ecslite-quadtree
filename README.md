@@ -70,7 +70,7 @@ public struct PositionWithNearestEntityComponent
 ```
 2. До работы систем из этого расширения актуализировать Position этих компонентов
 
-3. После работы QuadTreeFindNearestSystem, можно использовать найденные данные для дальнейшех задач, например:
+3. После работы QuadTreeFindNearestSystem, можно использовать найденные данные для дальнейших задач, например:
 ```c#
     public class DrawSystem : IEcsRunSystem
     {
