@@ -82,7 +82,7 @@ public struct PositionWithNearestEntityComponent
         }
         ...
 ```
-![Alt Text](https://s11.gifyu.com/images/q3a.gif)
+[GIF](https://s11.gifyu.com/images/q3a.gif)
 
 # Примечание
 
