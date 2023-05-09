@@ -38,7 +38,7 @@ var quadSvc = new QuadTreeService(new QuadBounds(Vector2.Zero, new Vector2(1000,
 ```
 Эти системы будут обрабатывать все сущности с компонентом PositionWithNearestEntityComponent.
 
-Поскольку система QuadTreeFineNearestSystem является многопоточной, в неё можно передать размер чанка, это будет число сущностей на поток (по умолчанию 300)
+Поскольку система QuadTreeFindNearestSystem является многопоточной, в неё можно передать размер чанка, это будет число сущностей на поток (по умолчанию 300)
 ```c#
            _systems
                 .Add(new QuadTreeBuildSystem(quadSvc))
@@ -65,8 +65,9 @@ public struct PositionWithNearestEntityComponent
         public (Vector2 Position, int Entity) NearestEntity;
     }
 ```
+2. До работы систем из этого расширения актуализировать Position этих компонентов
 
-2. После работы QuadTreeFineNearestSystem, можно использовать найденные данные для дальнейшех задач, например:
+3. После работы QuadTreeFindNearestSystem, можно использовать найденные данные для дальнейшех задач, например:
 ```c#
     public class DrawSystem : IEcsRunSystem
     {
