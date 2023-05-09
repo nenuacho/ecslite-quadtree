@@ -1,0 +1,13 @@
+{
+  "name": "com.nenuacho.ecslite.quadtree-systems",
+  "author": "Nenuacho",
+  "displayName": "LeoECS Lite Quadtree Systems",
+  "unity": "2020.3",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nenuacho/ecslite-quadtree.git"
+  }
+}
