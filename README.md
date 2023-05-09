@@ -6,6 +6,8 @@
 # Зависимости
 [ecslite](https://github.com/Leopotam/ecslite)
 
+[ecslite-threads](https://github.com/Leopotam/ecslite-threads)
+
 # Установка
 ## В виде unity модуля
 Поддерживается установка в виде unity-модуля через git-ссылку в PackageManager или прямое редактирование `Packages/manifest.json`:
@@ -53,7 +55,7 @@ var quadSvc = new QuadTreeService(new QuadBounds(Vector2.Zero, new Vector2(1000,
                 .Add(new QuadTreeFindNearestSystem(quadSvc, 200, myFilter))
                 .Init();
 ```
-при этом PositionWithNearestEntityComponent является обязательным компонентом
+при этом PositionWithNearestEntityComponent является обязательным компонентом в фильтре
 
 # Использование
 
