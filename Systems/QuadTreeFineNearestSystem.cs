@@ -5,14 +5,14 @@ using Nenuacho.EcsLiteQuadTree.Services;
 
 namespace Nenuacho.EcsLiteQuadTree.Systems
 {
-    public sealed class QuadTreeFineNearestSystem : EcsThreadSystem<QuadTreeFineNearestSystem.TestThread, PositionWithNearestEntityComponent>, IEcsInitSystem
+    public sealed class QuadTreeFindNearestSystem : EcsThreadSystem<QuadTreeFindNearestSystem.TestThread, PositionWithNearestEntityComponent>, IEcsInitSystem
     {
         private readonly QuadTreeService _quadTreeService;
         private EcsFilter _filter;
         private readonly int _chunkSize;
         private readonly EcsFilter _userFilter;
 
-        public QuadTreeFineNearestSystem(QuadTreeService quadTreeService, int chunkSize = 300, EcsFilter filter = null)
+        public QuadTreeFindNearestSystem(QuadTreeService quadTreeService, int chunkSize = 300, EcsFilter filter = null)
         {
             _quadTreeService = quadTreeService;
             _chunkSize = chunkSize;
