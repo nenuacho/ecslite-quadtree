@@ -2,6 +2,7 @@
   "name": "com.nenuacho.ecslite.quadtree-systems",
   "author": "Nenuacho",
   "displayName": "LeoECS Lite Quadtree Systems",
+  "description": "Расширение включает в себя реализацию структуры quadtree и системы для работы с ней",
   "unity": "2020.3",
   "version": "1.0.0",
   "dependencies": {
