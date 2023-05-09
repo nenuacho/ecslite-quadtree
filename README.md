@@ -32,7 +32,7 @@ var quadSvc = new QuadTreeService(new QuadBounds(Vector2.Zero, new Vector2(1000,
 1. QuadTreeBuildSystem - система построения дерева
 2. QuadTreeFindNearestSystem - система поиска ближайшей сущности
 
-Система построения дерева должа отрабатывать до системы поиска
+Система построения дерева должна отрабатывать до системы поиска
 ```c#
            _systems
                 .Add(new QuadTreeBuildSystem(quadSvc))
