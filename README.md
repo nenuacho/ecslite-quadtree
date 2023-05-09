@@ -13,7 +13,7 @@
 ## В виде unity модуля
 Поддерживается установка в виде unity-модуля через git-ссылку в PackageManager или прямое редактирование `Packages/manifest.json`:
 ```
-"com.nenuacho.ecslite.interval-systems": "https://github.com/nenuacho/ecslite-quadtree.git",
+"com.nenuacho.ecslite.quadtree-systems": "https://github.com/nenuacho/ecslite-quadtree.git",
 ```
 
 # Интеграция
