@@ -1,0 +1,17 @@
+{
+    "name": "Nenuacho.EcsLiteQuadTree",
+    "rootNamespace": "",
+    "references": [
+        "Leopotam.EcsLite",
+        "Leopotam.EcsLite.Threads"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -148,9 +148,9 @@ namespace Nenuacho.EcsLiteQuadTree.Core
                 for (int i = 0; i < 4; i++)
                 {
                     ref var subQuad = ref Children[i];
-                    if (DistanceToRectangle(target.Position, subQuad.Bounds) <= nearestDistance)
+                    if (DistanceToRectangle(in target.Position, in subQuad.Bounds) <= nearestDistance)
                     {
-                        subQuad.FindNearestObjectRecursive(target, ref nearest, ref nearestDistance);
+                        subQuad.FindNearestObjectRecursive(in target, ref nearest, ref nearestDistance);
                     }
                 }
             }

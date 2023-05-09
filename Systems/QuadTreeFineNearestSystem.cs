@@ -5,7 +5,7 @@ using Nenuacho.EcsLiteQuadTree.Services;
 
 namespace Nenuacho.EcsLiteQuadTree.Systems
 {
-    public sealed class QuadTreeFindNearestSystem : EcsThreadSystem<QuadTreeFindNearestSystem.TestThread, PositionWithNearestEntityComponent>, IEcsInitSystem
+    public sealed class QuadTreeFindNearestSystem : EcsThreadSystem<QuadTreeFindNearestSystem.SearchThread, PositionWithNearestEntityComponent>, IEcsInitSystem
     {
         private readonly QuadTreeService _quadTreeService;
         private EcsFilter _filter;
@@ -39,12 +39,12 @@ namespace Nenuacho.EcsLiteQuadTree.Systems
             return systems.GetWorld();
         }
 
-        protected override void SetData(IEcsSystems systems, ref TestThread thread)
+        protected override void SetData(IEcsSystems systems, ref SearchThread thread)
         {
             thread.QuadTreeService = _quadTreeService;
         }
 
-        public struct TestThread : IEcsThread<PositionWithNearestEntityComponent>
+        public struct SearchThread : IEcsThread<PositionWithNearestEntityComponent>
         {
             public QuadTreeService QuadTreeService;
             private int[] _entities;

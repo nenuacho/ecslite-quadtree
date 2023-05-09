@@ -24,7 +24,7 @@ namespace Nenuacho.EcsLiteQuadTree.Systems
             foreach (var e in _filter)
             {
                 ref var c = ref _pool.Get(e);
-                _quadTreeService.AddPosition(c.Position, e);
+                _quadTreeService.AddPosition(in c.Position, e);
             }
         }
 

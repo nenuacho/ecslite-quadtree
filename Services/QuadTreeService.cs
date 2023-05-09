@@ -22,7 +22,7 @@ namespace Nenuacho.EcsLiteQuadTree.Services
             _root.Reset();
         }
 
-        public (Vector2, int) FindNearestEntityTo((Vector2, int) position)
+        public (Vector2, int) FindNearestEntityTo(in (Vector2, int) position)
         {
             return _root.FindNearestObject(position);
         }
