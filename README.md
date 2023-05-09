@@ -91,4 +91,4 @@ public struct PositionWithNearestEntityComponent
 # Примечание
 
 Поскольку операция поиска ближайших сущностей может быть ресурсоемкой, не следует производить поиск каждый кадр, лучше подобрать более длительный интервал. 
-А с интервалами пожет [Interval Systems](https://github.com/nenuacho/ecslite-interval-systems)
+А с интервалами поможет [Interval Systems](https://github.com/nenuacho/ecslite-interval-systems)
