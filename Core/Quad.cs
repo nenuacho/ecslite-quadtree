@@ -11,7 +11,7 @@ namespace Nenuacho.EcsLiteQuadTree.Core
         public bool IsDivided;
         private int _maxPoints;
         private int _count;
-        private (Vector2 Position, int Entity)[] _points;
+        private (int Entity, Vector2 Position)[] _points;
 
 
         public static Quad CreateRoot(QuadBounds bounds, int maxPoints)
@@ -28,9 +28,9 @@ namespace Nenuacho.EcsLiteQuadTree.Core
 
             _maxPoints = maxPoints;
             _count = 0;
-            
+
             Children ??= new Quad[4];
-            _points ??= new (Vector2, int)[_maxPoints];
+            _points ??= new (int, Vector2)[_maxPoints];
         }
 
         public override string ToString()
@@ -60,7 +60,7 @@ namespace Nenuacho.EcsLiteQuadTree.Core
 
             if (_count < _maxPoints)
             {
-                _points[_count] = (point, e);
+                _points[_count] = (e, point);
                 _count++;
             }
             else
@@ -108,18 +108,18 @@ namespace Nenuacho.EcsLiteQuadTree.Core
             return b > c ? b : c;
         }
 
-        public (Vector2 Position, int Entity) FindNearestObject(in (Vector2, int) target)
+        public (int Entity, Vector2 Position, float distance) FindNearestObject(in (int, Vector2) target)
         {
             var nearestDistance = float.MaxValue;
 
-            (Vector2, int) nearest = (Vector2.Zero, -1);
+            (int Entity, Vector2 Position) nearest = (-1, Vector2.Zero);
 
             FindNearestObjectRecursive(target, ref nearest, ref nearestDistance);
 
-            return nearest;
+            return (nearest.Entity, nearest.Position, nearestDistance);
         }
 
-        private void FindNearestObjectRecursive(in (Vector2 Position, int Entity) target, ref (Vector2 Position, int Entity) nearest, ref float nearestDistance)
+        private void FindNearestObjectRecursive(in (int Entity, Vector2 Position) target, ref (int Entity,Vector2 Position) nearest, ref float nearestDistance)
         {
             if (nearestDistance == 0)
             {

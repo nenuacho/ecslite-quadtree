@@ -64,7 +64,7 @@ namespace Nenuacho.EcsLiteQuadTree.Systems
                 {
                     var e = _entities[i];
                     ref var c = ref _pool[_indices[e]];
-                    c.NearestEntity = QuadTreeService.FindNearestEntityTo((c.Position, e));
+                    c.NearestEntity = QuadTreeService.FindNearestEntityTo((e, c.Position));
                 }
             }
         }
