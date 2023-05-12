@@ -62,7 +62,7 @@ var quadSvc = new QuadTreeService(new QuadBounds(Vector2.Zero, new Vector2(1000,
 public struct PositionWithNearestEntityComponent
     {
         public Vector2 Position;
-        public (Vector2 Position, int Entity) NearestEntity;
+        public (int Entity, Vector2 Position, float Distance) NearestEntity;
     }
 ```
 2. До работы систем из этого расширения актуализировать Position этих компонентов
