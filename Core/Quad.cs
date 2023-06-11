@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
@@ -85,20 +86,20 @@ namespace Nenuacho.EcsLiteQuadTree.Core
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static float CalculateDistance(in Vector2 p1, in Vector2 p2)
+        private static float CalculateSqDistance(in Vector2 p1, in Vector2 p2)
         {
             double dx = p2.X - p1.X;
             double dy = p2.Y - p1.Y;
-            return (float)Math.Sqrt(dx * dx + dy * dy);
+            return (float)(dx * dx + dy * dy);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static float DistanceToRectangle(in Vector2 point, in QuadBounds bounds)
+        private static float SqDistanceToRectangle(in Vector2 point, in QuadBounds bounds)
         {
             float dx = Max(bounds.Left - point.X, 0f, point.X - bounds.Right);
             float dy = Max(bounds.Bottom - point.Y, 0f, point.Y - bounds.Top);
-            var r = Math.Sqrt(dx * dx + dy * dy);
-            return (float)r;
+            var r = dx * dx + dy * dy;
+            return r;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -116,10 +117,91 @@ namespace Nenuacho.EcsLiteQuadTree.Core
 
             FindNearestObjectRecursive(target, ref nearest, ref nearestDistance);
 
-            return (nearest.Entity, nearest.Position, nearestDistance);
+            return (nearest.Entity, nearest.Position, (float)Math.Sqrt(nearestDistance));
         }
 
-        private void FindNearestObjectRecursive(in (int Entity, Vector2 Position) target, ref (int Entity,Vector2 Position) nearest, ref float nearestDistance)
+
+        public int FindNearestObjects(in (int, Vector2) target, float radius, (int, Vector2, float)[] result)
+        {
+            var nearestDistance = float.MaxValue;
+
+            var sqRadius = radius * radius;
+
+            (int Entity, Vector2 Position) nearest = (-1, Vector2.Zero);
+
+            int cnt = 0;
+            FindNearestObjectsRecursive(target, sqRadius, ref nearest, ref nearestDistance, result, ref cnt);
+
+            return cnt;
+        }
+
+
+        private void FindNearestObjectsRecursive(
+            in (int Entity, Vector2 Position) target,
+            float sqRadius,
+            ref (int Entity, Vector2 Position) nearest,
+            ref float nearestDistance,
+            (int Entity, Vector2 Position, float)[] result,
+            ref int count)
+        {
+            // if (nearestDistance == 0)
+            // {
+            //     return;
+            // }
+
+            for (int i = 0; i < _count; i++)
+            {
+                ref var point = ref _points[i];
+                if (target.Entity == point.Entity)
+                {
+                    continue;
+                }
+
+                var distance = CalculateSqDistance(point.Position, target.Position);
+
+                if (distance < sqRadius)
+                {
+                    UpdateResult(result, (point.Entity, point.Position, distance), ref count);
+                }
+            }
+
+            if (IsDivided)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    ref var subQuad = ref Children[i];
+                    if (SqDistanceToRectangle(in target.Position, in subQuad.Bounds) <= nearestDistance)
+                    {
+                        subQuad.FindNearestObjectsRecursive(in target, sqRadius, ref nearest, ref nearestDistance, result, ref count);
+                    }
+                }
+            }
+        }
+
+        private void UpdateResult((int, Vector2, float Distance)[] result, in (int, Vector2, float Distance) point, ref int count)
+        {
+            if (result.Length > count)
+            {
+                result[count] = point;
+                count++;
+                return;
+            }
+
+            Array.Sort(result, (x, y) => x.Distance.CompareTo(y.Distance));
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                ref var other = ref result[i];
+                if (point.Distance < other.Distance)
+                {
+                    result[i] = point;
+                    return;
+                }
+            }
+        }
+
+
+        private void FindNearestObjectRecursive(in (int Entity, Vector2 Position) target, ref (int Entity, Vector2 Position) nearest, ref float nearestDistance)
         {
             if (nearestDistance == 0)
             {
@@ -134,7 +216,7 @@ namespace Nenuacho.EcsLiteQuadTree.Core
                     continue;
                 }
 
-                var distance = CalculateDistance(point.Position, target.Position);
+                var distance = CalculateSqDistance(point.Position, target.Position);
 
                 if (distance < nearestDistance)
                 {
@@ -148,7 +230,7 @@ namespace Nenuacho.EcsLiteQuadTree.Core
                 for (int i = 0; i < 4; i++)
                 {
                     ref var subQuad = ref Children[i];
-                    if (DistanceToRectangle(in target.Position, in subQuad.Bounds) <= nearestDistance)
+                    if (SqDistanceToRectangle(in target.Position, in subQuad.Bounds) <= nearestDistance)
                     {
                         subQuad.FindNearestObjectRecursive(in target, ref nearest, ref nearestDistance);
                     }
